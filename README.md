@@ -41,7 +41,7 @@ ssh -i <path_to_key>/<key_name> <user>@<public_ip>
 ```
 - An example for my machine would be
 ```bash
-ssh -i eng74-jamie-aws-key.pem ubuntu@3.251.91.166
+ssh -i eng74-jamie-aws-key.pem ubuntu@54.194.205.11
 ```
 ### How to send in one file to a remote server
 - General command is
@@ -51,7 +51,7 @@ scp -i <path_to_key>/<key_name> <source_path>/<file_name> <user>@<public_ip>:<de
 - A specific example for copying in a provision file for the sparta nodejs app
 would be
 ```bash
-scp -i ~/.ssh/eng74-jamie-aws-key.pem provision.sh ubuntu@3.251.91.166:~/provision.sh
+scp -i ~/.ssh/eng74-jamie-aws-key.pem provision.sh ubuntu@54.194.205.11:~/provision.sh
 ```
 ### How to send in multiple files to a remote server
 - General command is
@@ -61,7 +61,7 @@ scp -i <path_to_key>/<key_name> -r <folder> <user>@<public_ip>:<destination_path
 - A specific example for copying in the app code for the sparta nodejs app would
 be
 ```bash
-scp -i ~/.ssh/eng74-jamie-aws-key.pem -r app ubuntu@3.251.91.166:~/app
+scp -i ~/.ssh/eng74-jamie-aws-key.pem -r app ubuntu@54.194.205.11:~/app
 ```
 ### General outline of how to get the app running on the server in Ireland
 #### Setting up the EC2 instance
@@ -99,14 +99,16 @@ folder to be located within your virtual machine
 ```bash
 scp -i <path_to_key>/<key_name> -r <folder> ubuntu@<public_ip>:<destination_path>
 ```
-`scp -i ~/.ssh/eng74-jamie-aws-key.pem -r app ubuntu@34.247.160.37:~/app`
+`scp -i ~/.ssh/eng74-jamie-aws-key.pem -r app ubuntu@54.194.205.11:~/app`
 #### Setting up the virtual environment to run the app
 - Manually go through all of the steps outlined in the provision.sh file for
-the app, but replace the ip in the reverse-proxy.conf file to the public ipv4
-address for the EC2 instance
+the app, but replace the ip in the reverse-proxy.conf file to the private ipv4
+address for the EC2 instance and add server_name = <private_ip>; above the
+location
 - Once you finish the rest of the steps in the provision file and npm start, it
-should work on port 3000!
+should work on port 3000 and port 80!
 ### Pictures of app running
 - Port 3000
-
+![Port 3000](/images/nodejs_3000_proof.PNG)
 - Port 80
+![Port 80](/images/nodejs_80_proof.PNG)
