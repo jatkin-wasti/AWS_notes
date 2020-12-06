@@ -59,7 +59,7 @@ scp -i ~/.ssh/eng74-jamie-aws-key.pem provision.sh ubuntu@54.194.205.11:~/provis
 scp -i <path_to_key>/<key_name> -r <folder> <user>@<public_ip>:<destination_path>
 ```
 - A specific example for copying in the app code for the sparta nodejs app would
-be
+be (mind that the ip will change every time the EC2 instance is restarted)
 ```bash
 scp -i ~/.ssh/eng74-jamie-aws-key.pem -r app ubuntu@54.194.205.11:~/app
 ```
@@ -101,14 +101,29 @@ scp -i <path_to_key>/<key_name> -r <folder> ubuntu@<public_ip>:<destination_path
 ```
 `scp -i ~/.ssh/eng74-jamie-aws-key.pem -r app ubuntu@54.194.205.11:~/app`
 #### Setting up the virtual environment to run the app
+**The App VM**
+- Make sure the EC2 instance has the correct inbound rules set up for its
+Security Group
+- These should allow port 22 SSH access from your own IP and of Jenkins (if
+  using Jenkins for CI/CD), and port 3000 and 80 access for your own IP as custom
+   TCP protocol 
 - Manually go through all of the steps outlined in the provision.sh file for
 the app, but replace the ip in the reverse-proxy.conf file to the private ipv4
 address for the EC2 instance and add server_name = <private_ip>; above the
 location
 - Once you finish the rest of the steps in the provision file and npm start, it
 should work on port 3000 and port 80!
+**The DB VM**
+- Make sure the EC2 instance has the correct inbound rules set up for its
+Security Group
+- These should allow port 22 access from your own IP and port 27017 access for
+the public IP of your app EC2 instance
+- Manually go through all of the steps outlined in the provision.sh file for the
+db
 ### Pictures of app running
 - Port 3000
 ![Port 3000](/images/nodejs_3000_proof.PNG)
 - Port 80
 ![Port 80](/images/nodejs_80_proof.PNG)
+- Posts connecting to the db instance
+![Posts](/images/aws_nodejs_posts_proof.PNG)
